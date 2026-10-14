@@ -1,0 +1,31 @@
+#!/bin/sh
+# Runs macfan, compiling it first if needed (a few seconds, once).
+#
+#   ./macfan              live speeds + temperatures (read-only)
+#   sudo ./macfan         same, with ↑/↓ fan control
+#   sudo ./macfan auto    hand control back to macOS
+set -e
+cd "$(dirname "$0")"
+BIN=.build/release/macfan
+
+needs_build() {
+    [ ! -x "$BIN" ] && return 0
+    [ -n "$(find Sources Package.swift -newer "$BIN" 2>/dev/null)" ]
+}
+
+if needs_build; then
+    if ! command -v swift >/dev/null 2>&1; then
+        echo "macfan: Swift toolchain not found; install Xcode Command Line Tools: xcode-select --install" >&2
+        exit 1
+    fi
+    echo "building macfan…" >&2
+    if [ "$(id -u)" = 0 ] && [ -n "$SUDO_USER" ]; then
+        # Invoked via sudo: build as the real user so .build stays user-owned.
+        sudo -u "$SUDO_USER" swift build -c release 2>&1 | grep -v swiftpm >&2 || true
+    else
+        swift build -c release 2>&1 | grep -v swiftpm >&2 || true
+    fi
+    [ -x "$BIN" ] || { echo "macfan: build failed" >&2; exit 1; }
+fi
+
+exec "$BIN" "$@"
