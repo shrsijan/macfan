@@ -74,8 +74,8 @@ per-model key list is needed. Only these keys are ever written:
 
 | Key | Purpose |
 |-----|---------|
-| `F?Md` / `F?md` | per-fan mode: 0 auto, 1 manual, 3 system (thermalmonitord) |
-| `F?Tg` | per-fan target rpm |
+| `F[placeholder_ID]Md` / `F[placeholder_ID]md` | per-fan mode: 0 auto, 1 manual, 3 system (thermalmonitord) |
+| `F[placeholder_ID]Tg` | per-fan target rpm |
 | `Ftst` | global unlock, M3 and later (set while manual, cleared on default) |
 | `FS! ` | Intel force bitmask |
 
