@@ -23,12 +23,9 @@ git clone https://github.com/shrsijan/macfan.git && cd macfan
 make install            # puts macfan in /usr/local/bin; PREFIX=~/.local make install for a user install
 ```
 
-Or run it in place without installing: `./macfan` builds on first use and
-then starts instantly.
+Or run it in place without installing: `./macfan`.
 
-Uninstall with `make uninstall`, or delete `/usr/local/bin/macfan`. That is all
-the tool ever puts on disk.
-
+Uninstall with `make uninstall`, or delete `/usr/local/bin/macfan`.
 ## Use
 
 ```sh
@@ -51,8 +48,7 @@ macfan --interval 2 --step 250 # dashboard with different refresh/step
 macfan > fans.log              # piped output is one line per tick
 ```
 
-Every command prints the current speeds and temperatures and how to undo
-what it just did.
+Every command prints the current speeds and temperatures
 
 ## Stopping
 
